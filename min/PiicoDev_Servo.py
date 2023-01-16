@@ -44,9 +44,9 @@ class PiicoDev_Servo_Driver(PCA9685):
 		i2c=create_unified_i2c(bus=bus,freq=freq,sda=sda,scl=scl);PCA9685.__init__(self,i2c,address=addr)
 class PiicoDev_Servo:
 	def __init__(self,controller,channel,freq=50,min_us=600,max_us=2400,degrees=180,midpoint_us=_A,range_us=_A):
-		self.period=1000000/freq;print('period us',self.period)
+		self.period=1000000/freq
 		if midpoint_us is not _A and range_us is not _A:min_us=midpoint_us-range_us/2;max_us=midpoint_us+range_us/2
-		self.min_duty=self._us2duty(min_us);self.max_duty=self._us2duty(max_us);print('min duty',self.min_duty);print('max duty',self.max_duty);self._degrees=degrees;self.freq=freq;self.controller=controller;self.channel={4:0,3:1,2:2,1:3}[channel]
+		self.min_duty=self._us2duty(min_us);self.max_duty=self._us2duty(max_us);self._degrees=degrees;self.freq=freq;self.controller=controller;self.channel={4:0,3:1,2:2,1:3}[channel]
 	def _us2duty(self,value):return int(4095*value/self.period+0.5)
 	@property
 	def angle(self):return self._angle
